@@ -6,6 +6,13 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		AF94FC932E4F87F900DEB490 /* NetworkLayer in Frameworks */ = {isa = PBXBuildFile; productRef = AF94FC922E4F87F900DEB490 /* NetworkLayer */; };
+		AF94FC962E4F885000DEB490 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = AF94FC952E4F885000DEB490 /* SDWebImageSwiftUI */; };
+		AF94FC992E4F930F00DEB490 /* ThmanyahCoreAPI in Frameworks */ = {isa = PBXBuildFile; productRef = AF94FC982E4F930F00DEB490 /* ThmanyahCoreAPI */; };
+		AFA9CD112E4F7B1800CFD679 /* SUIRouting in Frameworks */ = {isa = PBXBuildFile; productRef = AFA9CD102E4F7B1800CFD679 /* SUIRouting */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		AFB1177D2E4F687900B997F0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -52,6 +59,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AF94FC992E4F930F00DEB490 /* ThmanyahCoreAPI in Frameworks */,
+				AF94FC962E4F885000DEB490 /* SDWebImageSwiftUI in Frameworks */,
+				AFA9CD112E4F7B1800CFD679 /* SUIRouting in Frameworks */,
+				AF94FC932E4F87F900DEB490 /* NetworkLayer in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,6 +123,10 @@
 			);
 			name = ThmanyahChallenges;
 			packageProductDependencies = (
+				AFA9CD102E4F7B1800CFD679 /* SUIRouting */,
+				AF94FC922E4F87F900DEB490 /* NetworkLayer */,
+				AF94FC952E4F885000DEB490 /* SDWebImageSwiftUI */,
+				AF94FC982E4F930F00DEB490 /* ThmanyahCoreAPI */,
 			);
 			productName = ThmanyahChallenges;
 			productReference = AFB1176F2E4F687900B997F0 /* ThmanyahChallenges.app */;
@@ -195,6 +210,12 @@
 			);
 			mainGroup = AFB117662E4F687900B997F0;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				AFA9CD0F2E4F7B1800CFD679 /* XCRemoteSwiftPackageReference "SUIRouting" */,
+				AF94FC912E4F87F900DEB490 /* XCRemoteSwiftPackageReference "NetworkLayer" */,
+				AF94FC942E4F885000DEB490 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+				AF94FC972E4F930F00DEB490 /* XCRemoteSwiftPackageReference "ThmanyahCoreAPI" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = AFB117702E4F687900B997F0 /* Products */;
 			projectDirPath = "";
@@ -410,7 +431,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.-SamuraiStudios.ThmanyahChallenges";
+				PRODUCT_BUNDLE_IDENTIFIER = com.SamuraiStudios.ThmanyahChallenges;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -438,7 +459,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.-SamuraiStudios.ThmanyahChallenges";
+				PRODUCT_BUNDLE_IDENTIFIER = com.SamuraiStudios.ThmanyahChallenges;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -558,6 +579,64 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		AF94FC912E4F87F900DEB490 /* XCRemoteSwiftPackageReference "NetworkLayer" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/obadasemary/NetworkLayer.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.6;
+			};
+		};
+		AF94FC942E4F885000DEB490 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.1.3;
+			};
+		};
+		AF94FC972E4F930F00DEB490 /* XCRemoteSwiftPackageReference "ThmanyahCoreAPI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/obadasemary/ThmanyahCoreAPI";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		AFA9CD0F2E4F7B1800CFD679 /* XCRemoteSwiftPackageReference "SUIRouting" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/obadasemary/SUIRouting.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		AF94FC922E4F87F900DEB490 /* NetworkLayer */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AF94FC912E4F87F900DEB490 /* XCRemoteSwiftPackageReference "NetworkLayer" */;
+			productName = NetworkLayer;
+		};
+		AF94FC952E4F885000DEB490 /* SDWebImageSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AF94FC942E4F885000DEB490 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
+			productName = SDWebImageSwiftUI;
+		};
+		AF94FC982E4F930F00DEB490 /* ThmanyahCoreAPI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AF94FC972E4F930F00DEB490 /* XCRemoteSwiftPackageReference "ThmanyahCoreAPI" */;
+			productName = ThmanyahCoreAPI;
+		};
+		AFA9CD102E4F7B1800CFD679 /* SUIRouting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AFA9CD0F2E4F7B1800CFD679 /* XCRemoteSwiftPackageReference "SUIRouting" */;
+			productName = SUIRouting;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = AFB117672E4F687900B997F0 /* Project object */;
 }
