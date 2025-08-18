@@ -14,30 +14,27 @@ public enum SearchEndpoint {
 
 extension SearchEndpoint: Endpoint {
     public var baseURL: String { "https://mock.apidog.com/m1/735111-711675-default" }
-
+    
     public var path: String {
         switch self {
         case .search:
             return "/search"
         }
     }
-
+    
     public var method: HTTPMethod {
         switch self {
         case .search:
             return .get
         }
     }
-
+    
     public var parameters: [String : Any]? {
         switch self {
         case .search(let term):
-            let params: [String: Any] = ["q": term]
-            return params
+            return ["q": term]
         }
     }
-
-    public var contentType: String {
-        return "application/json"
-    }
+    
+    public var contentType: String { "application/json" }
 }

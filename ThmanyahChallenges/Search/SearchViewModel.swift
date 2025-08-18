@@ -29,17 +29,12 @@ extension SearchViewModel {
     func search(term: String) async {
         guard !term.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return }
         currentTerm = term
-        results.removeAll()
-        await loadMoreIfNeeded(currentIndex: 0)
-    }
-
-    func loadMoreIfNeeded(currentIndex: Int) async {
-        guard !isLoading, currentIndex >= results.count - 3 else { return }
         isLoading = true
         defer { isLoading = false }
+        
         do {
-            let res = try await searchUseCase.execute(term: currentTerm)
-            results.append(contentsOf: res.results)
+            let response = try await searchUseCase.execute(term: term)
+            results = response.results
         } catch {
             errorMessage = error.localizedDescription
         }

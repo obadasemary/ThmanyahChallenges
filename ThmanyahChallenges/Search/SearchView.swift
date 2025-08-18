@@ -39,9 +39,6 @@ struct SearchView: View {
                 List {
                     ForEach(Array(viewModel.results.enumerated()), id: \.1.id) { index, result in
                         SearchResultRow(result: result)
-                            .onAppear {
-                                Task { await viewModel.loadMoreIfNeeded(currentIndex: index) }
-                            }
                     }
                 }
                 .listStyle(.plain)
