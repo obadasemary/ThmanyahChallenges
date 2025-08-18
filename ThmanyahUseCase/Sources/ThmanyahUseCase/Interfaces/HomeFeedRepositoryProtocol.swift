@@ -7,6 +7,7 @@
 
 import Foundation
 
+@MainActor
 public protocol HomeFeedRepositoryProtocol {
     func fetchSections(page: Int) async throws -> HomeSectionsResponse
 }
