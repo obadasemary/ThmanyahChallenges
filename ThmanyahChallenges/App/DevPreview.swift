@@ -1,26 +1,26 @@
 //
-//  AppComposition.swift
+//  DevPreview.swift
 //  ThmanyahChallenges
 //
 //  Created by Abdelrahman Mohamed on 18.08.2025.
 //
 
 import Foundation
+import SwiftUI
+import ThmanyahCoreAPI
+import ThmanyahUseCase
+import ThmanyahRepository
 import DependencyContainer
 import ThmanyahNetworkLayer
-import ThmanyahCoreAPI
-import ThmanyahRepository
-import ThmanyahUseCase
 
 @MainActor
-final class AppComposition {
+class DevPreview {
     
-    var container = DIContainer()
-    let homeFeedUseCase: HomeFeedUseCaseProtocol
+    static let shared = DevPreview()
     
-    init() {
+    var container: DIContainer {
         
-        let container = container
+        let container = DIContainer()
         
         container.register(NetworkService.self) {
             URLSessionNetworkService(session: .shared)
@@ -36,7 +36,16 @@ final class AppComposition {
             HomeFeedUseCase(container: container)
         }
         
-        homeFeedUseCase = container.resolve(HomeFeedUseCaseProtocol.self)!
-        self.container = container
+        return container
+    }
+}
+
+extension View {
+    func previewEnvironment() -> some View {
+        self
+            .environment(
+                HomeFeedBuilder(container: DevPreview.shared.container)
+            )
+            .environment(SearchBuilder(container: DevPreview.shared.container))
     }
 }

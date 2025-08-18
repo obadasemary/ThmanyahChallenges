@@ -17,9 +17,11 @@ struct ThmanyahChallengesApp: App {
     var body: some Scene {
         WindowGroup {
             RouterView { _ in
-                delegate.homeFeedBuilder.buildHomeFeedView()
+                delegate.tabBarBuilder.buildTabBarView()
             }
+            .environment(delegate.tabBarBuilder)
             .environment(delegate.homeFeedBuilder)
+            .environment(delegate.searchBuilder)
         }
     }
 }

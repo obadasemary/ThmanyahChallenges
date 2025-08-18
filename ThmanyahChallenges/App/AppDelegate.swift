@@ -17,7 +17,9 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     var composition: AppComposition!
     
     // Builders
+    var tabBarBuilder: TabBarBuilder!
     var homeFeedBuilder: HomeFeedBuilder!
+    var searchBuilder: SearchBuilder!
     
     func application(
         _ application: UIApplication,
@@ -28,7 +30,9 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         composition = AppComposition()
         
         // Register builders
+        tabBarBuilder = TabBarBuilder(container: composition.container)
         homeFeedBuilder = HomeFeedBuilder(container: composition.container)
+        searchBuilder = SearchBuilder(container: composition.container)
         
         return true
     }
