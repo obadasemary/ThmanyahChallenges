@@ -27,13 +27,29 @@ public final class URLSessionNetworkService {
 extension URLSessionNetworkService: NetworkService {
     
     public func request<T: Decodable>(endpoint: Endpoint, responseModel: T.Type) async throws -> T {
-        guard let url = URL(string: endpoint.baseURL + endpoint.path) else {
+        // Build URL with query parameters for GET requests
+        let urlString = endpoint.baseURL + endpoint.path
+        guard var urlComponents = URLComponents(string: urlString) else {
             throw NetworkError.invalidURL
         }
+        if endpoint.method == .get, let params = endpoint.parameters, !params.isEmpty {
+            let items: [URLQueryItem] = params.map { key, value in
+                URLQueryItem(name: key, value: String(describing: value))
+            }
+            // Preserve existing query items if any
+            urlComponents.queryItems = (urlComponents.queryItems ?? []) + items
+        }
+        guard let url = urlComponents.url else { throw NetworkError.invalidURL }
         
         var request = URLRequest(url: url)
         request.httpMethod = endpoint.method.rawValue
         request.allHTTPHeaderFields = endpoint.headers
+        // Encode body for non-GET methods
+        if endpoint.method != .get, let params = endpoint.parameters {
+            if endpoint.contentType.contains("application/json") {
+                request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
+            }
+        }
         
         let (data, response) = try await session.data(for: request)
         
