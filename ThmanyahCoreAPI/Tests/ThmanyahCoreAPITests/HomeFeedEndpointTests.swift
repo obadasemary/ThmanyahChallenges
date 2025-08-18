@@ -20,13 +20,16 @@ struct HomeFeedEndpointTests {
     @Test("path without pagination")
     func testPathWithoutPagination() {
         let sut = HomeFeedEndpoint.getHomeSections(page: nil)
-        #expect(sut.path == "home_sections")
+        #expect(sut.path == "/home_sections")
     }
     
     @Test("path with pagination")
     func testPathWithPagination() {
         let sut = HomeFeedEndpoint.getHomeSections(page: 2)
-        #expect(sut.path == "home_sections?page=2")
+        // Path should only contain the path component, not query parameters
+        #expect(sut.path == "/home_sections")
+        // Parameters should contain the query parameters
+        #expect(sut.parameters?["page"] as? Int == 2)
     }
     
     @Test("HTTP method is GET")
@@ -43,10 +46,16 @@ struct HomeFeedEndpointTests {
         #expect(sut.headers.count == 1)
     }
     
-    @Test("parameters are nil for GET")
-    func testParameters() {
+    @Test("parameters are nil for GET without page")
+    func testParametersWithoutPage() {
         let sut = HomeFeedEndpoint.getHomeSections(page: nil)
         #expect(sut.parameters == nil)
+    }
+    
+    @Test("parameters contain page when provided")
+    func testParametersWithPage() {
+        let sut = HomeFeedEndpoint.getHomeSections(page: 2)
+        #expect(sut.parameters?["page"] as? Int == 2)
     }
     
     @Test("contentType is application/json")
@@ -55,13 +64,32 @@ struct HomeFeedEndpointTests {
         #expect(sut.contentType == "application/json")
     }
     
-    @Test("composed URL sanity (no double slashes)")
+    @Test("composed URL sanity (no double slashes in path)")
     func testComposedURLSanity() throws {
         let sut = HomeFeedEndpoint.getHomeSections(page: 1)
-        // This mirrors typical URL building logic: baseURL + "/" + path
-        let urlString = "\(sut.baseURL)/\(sut.path)"
-        // Ensure no accidental '//' in the middle & valid URL
-        #expect(!urlString.contains("//home_sections"))
+        // This mirrors typical URL building logic: baseURL + path (path already starts with /)
+        let urlString = sut.baseURL + sut.path
+        // Ensure no accidental '//' in the path part (after the protocol)
+        let pathPart = String(urlString.dropFirst("https://".count))
+        #expect(!pathPart.contains("//"))
         #expect(URL(string: urlString) != nil)
+    }
+    
+    @Test("full URL construction with parameters")
+    func testFullURLConstruction() throws {
+        let sut = HomeFeedEndpoint.getHomeSections(page: 2)
+        
+        // Build the full URL as the NetworkService would
+        var urlComponents = URLComponents(string: sut.baseURL + sut.path)!
+        if let params = sut.parameters {
+            urlComponents.queryItems = params.map { key, value in
+                URLQueryItem(name: key, value: String(describing: value))
+            }
+        }
+        
+        let fullURL = urlComponents.url!
+        let expectedURLString = "https://api-v2-b2sit6oh3a-uc.a.run.app/home_sections?page=2"
+        
+        #expect(fullURL.absoluteString == expectedURLString)
     }
 }
