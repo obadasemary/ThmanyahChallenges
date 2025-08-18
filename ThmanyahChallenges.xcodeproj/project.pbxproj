@@ -11,6 +11,7 @@
 		AF94FCD52E51E3AB00DEB490 /* ThmanyahUseCase in Frameworks */ = {isa = PBXBuildFile; productRef = AF94FCD42E51E3AB00DEB490 /* ThmanyahUseCase */; };
 		AF94FCD72E5208C400DEB490 /* ThmanyahRepository in Frameworks */ = {isa = PBXBuildFile; productRef = AF94FCD62E5208C400DEB490 /* ThmanyahRepository */; };
 		AF94FCD92E520C5600DEB490 /* ThmanyahNetworkLayer in Frameworks */ = {isa = PBXBuildFile; productRef = AF94FCD82E520C5600DEB490 /* ThmanyahNetworkLayer */; };
+		AFA8F22B2E53563500D52EFA /* DependencyContainer in Frameworks */ = {isa = PBXBuildFile; productRef = AFA8F22A2E53563500D52EFA /* DependencyContainer */; };
 		AFA9CD112E4F7B1800CFD679 /* SUIRouting in Frameworks */ = {isa = PBXBuildFile; productRef = AFA9CD102E4F7B1800CFD679 /* SUIRouting */; };
 		AFCF80D82E52A8450030756E /* ThmanyahCoreAPI in Frameworks */ = {isa = PBXBuildFile; productRef = AFCF80D72E52A8450030756E /* ThmanyahCoreAPI */; };
 /* End PBXBuildFile section */
@@ -63,6 +64,7 @@
 			files = (
 				AFCF80D82E52A8450030756E /* ThmanyahCoreAPI in Frameworks */,
 				AF94FC962E4F885000DEB490 /* SDWebImageSwiftUI in Frameworks */,
+				AFA8F22B2E53563500D52EFA /* DependencyContainer in Frameworks */,
 				AF94FCD52E51E3AB00DEB490 /* ThmanyahUseCase in Frameworks */,
 				AF94FCD92E520C5600DEB490 /* ThmanyahNetworkLayer in Frameworks */,
 				AFA9CD112E4F7B1800CFD679 /* SUIRouting in Frameworks */,
@@ -141,6 +143,7 @@
 				AF94FCD62E5208C400DEB490 /* ThmanyahRepository */,
 				AF94FCD82E520C5600DEB490 /* ThmanyahNetworkLayer */,
 				AFCF80D72E52A8450030756E /* ThmanyahCoreAPI */,
+				AFA8F22A2E53563500D52EFA /* DependencyContainer */,
 			);
 			productName = ThmanyahChallenges;
 			productReference = AFB1176F2E4F687900B997F0 /* ThmanyahChallenges.app */;
@@ -628,6 +631,10 @@
 		AF94FCD82E520C5600DEB490 /* ThmanyahNetworkLayer */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ThmanyahNetworkLayer;
+		};
+		AFA8F22A2E53563500D52EFA /* DependencyContainer */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DependencyContainer;
 		};
 		AFA9CD102E4F7B1800CFD679 /* SUIRouting */ = {
 			isa = XCSwiftPackageProductDependency;

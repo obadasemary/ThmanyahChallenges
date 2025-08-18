@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:DependencyContainer">
+   </FileRef>
+   <FileRef
       location = "group:ThmanyahCoreAPI">
    </FileRef>
    <FileRef
