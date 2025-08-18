@@ -17,6 +17,7 @@ final class AppComposition {
     
     var container = DIContainer()
     let homeFeedUseCase: HomeFeedUseCaseProtocol
+    let searchUseCase: SearchUseCaseProtocol
     
     init() {
         
@@ -36,7 +37,18 @@ final class AppComposition {
             HomeFeedUseCase(container: container)
         }
         
+        container.register(SearchRepositoryProtocol.self) {
+            SearchRepository(
+                networkService: container.resolve(NetworkService.self)!
+            )
+        }
+        
+        container.register(SearchUseCaseProtocol.self) {
+            SearchUseCase(container: container)
+        }
+        
         homeFeedUseCase = container.resolve(HomeFeedUseCaseProtocol.self)!
+        searchUseCase = container.resolve(SearchUseCaseProtocol.self)!
         self.container = container
     }
 }
