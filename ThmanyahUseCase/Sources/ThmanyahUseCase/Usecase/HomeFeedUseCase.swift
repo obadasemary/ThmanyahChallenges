@@ -6,17 +6,21 @@
 //
 
 import Foundation
+import DependencyContainer
 
+@MainActor
 public protocol HomeFeedUseCaseProtocol {
     func execute(page: Int) async throws -> HomeSectionsResponse
 }
 
+@Observable
+@MainActor
 public final class HomeFeedUseCase {
     
     private let homeFeedRepository: HomeFeedRepositoryProtocol
     
-    public init(homeFeedRepository: HomeFeedRepositoryProtocol) {
-        self.homeFeedRepository = homeFeedRepository
+    public init(container: DIContainer) {
+        self.homeFeedRepository = container.resolve(HomeFeedRepositoryProtocol.self)!
     }
 }
 
