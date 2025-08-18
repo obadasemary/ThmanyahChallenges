@@ -16,7 +16,7 @@ extension HomeFeedEndpoint: Endpoint {
     
     // Base URL for the API
     public var baseURL: String {
-        return "https://api-v2-b2sit6oh3a-uc.a.run.app"
+        "https://api-v2-b2sit6oh3a-uc.a.run.app"
     }
     
     // Path for each case
@@ -31,7 +31,7 @@ extension HomeFeedEndpoint: Endpoint {
     public var method: HTTPMethod {
         switch self {
         case .getHomeSections:
-            return .get
+            .get
         }
     }
     
@@ -48,6 +48,6 @@ extension HomeFeedEndpoint: Endpoint {
     
     // Content type for requests
     public var contentType: String {
-        return "application/json"
+        "application/json"
     }
 }

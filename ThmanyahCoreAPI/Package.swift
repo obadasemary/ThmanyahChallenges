@@ -15,11 +15,17 @@ let package = Package(
             targets: ["ThmanyahCoreAPI"]
         ),
     ],
+    dependencies: [
+        .package(path: "../ThmanyahNetworkLayer")
+    ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "ThmanyahCoreAPI"
+            name: "ThmanyahCoreAPI",
+            dependencies: [
+                .product(name: "ThmanyahNetworkLayer", package: "ThmanyahNetworkLayer")
+            ]
         ),
         .testTarget(
             name: "ThmanyahCoreAPITests",
