@@ -8,6 +8,7 @@
 
 import SwiftUI
 import DependencyContainer
+import ThmanyahUseCase
 
 @Observable
 @MainActor
@@ -19,6 +20,10 @@ final class SearchBuilder {
     }
 
     func buildSearchView() -> some View {
-        SearchView()
+        SearchView(
+            viewModel: SearchViewModel(
+                searchUseCase: SearchUseCase(container: container)
+            )
+        )
     }
 }
