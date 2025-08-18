@@ -19,11 +19,41 @@ public enum MediaKind: String, Codable, Sendable {
     case audio_article
 }
 
-public enum SectionLayout: String, Codable, Sendable {
+public enum SectionLayout: String, Sendable {
     case square
     case big_square
     case queue
     case _2_lines_grid = "2_lines_grid"
+}
+
+extension SectionLayout: Codable {
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let raw = try container.decode(String.self)
+        // Normalize common variants from the backend (spaces / hyphens / casing)
+        let normalized: String = {
+            var s = raw.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+            s = s.replacingOccurrences(of: " ", with: "_")
+            s = s.replacingOccurrences(of: "-", with: "_")
+            switch s {
+            case "big square", "big__square": return "big_square"
+            case "two_lines_grid", "2_line_grid", "two_line_grid", "grid_2_lines": return "2_lines_grid"
+            default: return s
+            }
+        }()
+        if let value = SectionLayout(rawValue: normalized) {
+            self = value
+        } else {
+            // Be forgiving: default to .square if an unknown value arrives
+            // (alternatively, throw DecodingError.dataCorrupted for strict behavior)
+            self = .square
+        }
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        try container.encode(self.rawValue)
+    }
 }
 
 public struct Pagination: Codable, Equatable, Sendable {
@@ -82,7 +112,7 @@ public struct Episode: MediaItem, Codable, Equatable, Sendable {
     public let audioURLString: String?
     public let separatedAudioURL: String?
     public let duration: TimeInterval?
-    public let releaseDate: Date?
+    public let releaseDate: String?
     public let podcastID: String?
     public let podcastPriority: Int?
     public let podcastPopularityScore: Int?
@@ -92,6 +122,42 @@ public struct Episode: MediaItem, Codable, Equatable, Sendable {
     public var avatarURL: URL? { URL(string: avatarURLString ?? "") }
     public var descriptionHTML: String? { description }
     public var audioURL: URL? { URL(string: audioURLString ?? "") }
+    
+    public init(
+        episodeID: String,
+        name: String,
+        seasonNumber: Int?,
+        episodeType: String?,
+        podcastName: String?,
+        authorName: String?,
+        description: String?,
+        avatarURLString: String?,
+        audioURLString: String?,
+        separatedAudioURL: String?,
+        duration: TimeInterval?,
+        releaseDate: String?,
+        podcastID: String?,
+        podcastPriority: Int?,
+        podcastPopularityScore: Int?,
+        score: Double?
+    ) {
+        self.episodeID = episodeID
+        self.name = name
+        self.seasonNumber = seasonNumber
+        self.episodeType = episodeType
+        self.podcastName = podcastName
+        self.authorName = authorName
+        self.description = description
+        self.avatarURLString = avatarURLString
+        self.audioURLString = audioURLString
+        self.separatedAudioURL = separatedAudioURL
+        self.duration = duration
+        self.releaseDate = releaseDate
+        self.podcastID = podcastID
+        self.podcastPriority = podcastPriority
+        self.podcastPopularityScore = podcastPopularityScore
+        self.score = score
+    }
     
     enum CodingKeys: String, CodingKey {
         case episodeID = "episode_id"
@@ -119,7 +185,7 @@ public struct AudioBook: MediaItem, Codable, Equatable, Sendable {
     public let avatarURLString: String?
     public let duration: TimeInterval?
     public let language: String?
-    public let releaseDate: Date?
+    public let releaseDate: String?
     public let score: Double?
     
     public var id: String { audiobookID }
@@ -145,7 +211,7 @@ public struct AudioArticle: MediaItem, Codable, Equatable, Sendable {
     public let description: String?
     public let avatarURLString: String?
     public let duration: TimeInterval?
-    public let releaseDate: Date?
+    public let releaseDate: String?
     public let score: Double?
     
     public var id: String { articleID }
