@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import SUIRouting
 import ThmanyahUseCase
 
 @main
@@ -16,12 +15,9 @@ struct ThmanyahChallengesApp: App {
     
     var body: some Scene {
         WindowGroup {
-            RouterView { _ in
-                delegate.tabBarBuilder.buildTabBarView()
-            }
-            .environment(delegate.tabBarBuilder)
-            .environment(delegate.homeFeedBuilder)
-            .environment(delegate.searchBuilder)
+            delegate.homeFeedBuilder.buildHomeFeedView()
+                .environment(delegate.homeFeedBuilder)
+                .environment(delegate.searchBuilder)
         }
     }
 }

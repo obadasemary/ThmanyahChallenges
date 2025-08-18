@@ -44,7 +44,7 @@ struct HomeFeedView: View {
                     }
                 }
             }
-            .task {
+            .onFirstTask {
                 await viewModel.refresh()
             }
         }

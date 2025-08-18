@@ -47,7 +47,6 @@ extension HomeFeedViewModel {
         defer { isLoading = false }
         do {
             let response = try await homeFeedUseCase.execute(page: page)
-            print("response.sections.count:", response.sections.count)
             sections.append(contentsOf: response.sections)
             if let path = response.pagination.nextPage,
                let pageQuery = URLComponents(string: path)?.queryItems?.first(where: { $0.name == "page" })?.value,
