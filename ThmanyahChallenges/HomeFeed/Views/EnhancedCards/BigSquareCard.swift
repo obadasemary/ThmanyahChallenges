@@ -10,7 +10,8 @@ import ThmanyahUseCase
 
 // MARK: - BigSquareCard
 struct BigSquareCard: View {
-    let item: MediaItem
+    
+    let item: any MediaItem
     
     var body: some View {
         ZStack(alignment: .bottomLeading) {
