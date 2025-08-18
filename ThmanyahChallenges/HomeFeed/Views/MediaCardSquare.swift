@@ -32,6 +32,11 @@ public struct MediaCardSquare<Item: MediaItem>: View {
             Text(item.name)
                 .font(.headline)
                 .lineLimit(2)
+                .frame(
+                    minHeight: 44,
+                    alignment: .topLeading
+                )
+                .frame(maxWidth: .infinity, alignment: .leading)
             
             if let duration = item.duration {
                 Text(duration.mmss)

@@ -19,46 +19,13 @@ struct SectionView: View {
             
             switch section.content {
             case .podcasts(let podcasts):
-                ScrollView(.horizontal, showsIndicators: false) {
-                    LazyHStack {
-                        ForEach(podcasts) { podcast in
-                            podcastsSection(
-                                layout: section.type,
-                                items: podcasts
-                            )
-                        }
-                    }
-                }
+                podcastsSection(layout: section.type, items: podcasts)
             case .episodes(let episodes):
-                ScrollView(.vertical, showsIndicators: false) {
-                    LazyVStack {
-                        ForEach(episodes) { episode in
-                            episodesSection(
-                                layout: section.type,
-                                items: episodes
-                            )
-                        }
-                    }
-                }
+                episodesSection(layout: section.type, items: episodes)
             case .audioBooks(let books):
-                ScrollView(.horizontal, showsIndicators: false) {
-                    LazyHStack {
-                        ForEach(books) { book in
-                            booksSection(layout: section.type, items: books)
-                        }
-                    }
-                }
+                booksSection(layout: section.type, items: books)
             case .audioArticles(let articles):
-                ScrollView(.horizontal, showsIndicators: false) {
-                    LazyHStack {
-                        ForEach(articles) { article in
-                            articlesSection(
-                                layout: section.type,
-                                items: articles
-                            )
-                        }
-                    }
-                }
+                articlesSection(layout: section.type, items: articles)
             }
         }
     }
@@ -117,22 +84,22 @@ extension SectionView {
     @ViewBuilder
     fileprivate func horizontalCards<T: MediaItem>(_ items: [T]) -> some View {
         ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 16) {
+            HStack(spacing: 4) {
                 ForEach(items, id: \.id) { item in
                     MediaCardSquare(item: item)
                 }
             }
-            .padding(.horizontal, 4)
         }
     }
 
     @ViewBuilder
     fileprivate func verticalEpisodeRows(_ items: [Episode]) -> some View {
-        LazyVStack(spacing: 12) {
+        LazyVStack(spacing: 16) { // Increased spacing from 12 to 16 for better visual separation
             ForEach(items, id: \.id) { episode in
                 EpisodeTwoLineRow(episode: episode)
             }
         }
+        .padding(.horizontal, 20) // Add horizontal padding for consistent edge spacing
     }
 
     // MARK: - Mappers

@@ -29,22 +29,32 @@ public struct EpisodeTwoLineRow: View {
                     .font(.subheadline)
                     .fontWeight(.semibold)
                     .lineLimit(2)
+                    .multilineTextAlignment(.leading)
+                    .frame(minHeight: 36, alignment: .top) // Ensure consistent height for 2 lines
+                    .frame(maxWidth: .infinity, alignment: .leading) // Use full available width
                 
-                Text(episode.podcastName ?? "")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-                    .lineLimit(1)
-                
-                if let d = episode.duration {
-                    Text(d.mmss)
-                        .font(.caption2)
+                HStack {
+                    Text(episode.podcastName ?? "")
+                        .font(.caption)
                         .foregroundStyle(.secondary)
+                        .lineLimit(1)
+                    
+                    Spacer()
+                    
+                    if let d = episode.duration {
+                        Text(d.mmss)
+                            .font(.caption2)
+                            .foregroundStyle(.secondary)
+                    }
                 }
             }
             
             Spacer()
             Image(systemName: "play.circle.fill")
                 .font(.title3)
+                .foregroundStyle(.blue)
         }
+        .frame(height: 80) // Fixed height for consistent row spacing
+        .padding(.horizontal, 4) // Add small horizontal padding for better edge spacing
     }
 }
