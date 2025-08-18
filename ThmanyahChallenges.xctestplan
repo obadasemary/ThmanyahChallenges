@@ -1,0 +1,37 @@
+{
+  "configurations" : [
+    {
+      "id" : "50698D98-3016-4D87-A6EF-394D2C18C185",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:ThmanyahChallenges.xcodeproj",
+      "identifier" : "AFB1176E2E4F687900B997F0",
+      "name" : "ThmanyahChallenges"
+    }
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:ThmanyahChallenges.xcodeproj",
+        "identifier" : "AFB1177B2E4F687900B997F0",
+        "name" : "ThmanyahChallengesTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:ThmanyahChallenges.xcodeproj",
+        "identifier" : "AFB117852E4F687900B997F0",
+        "name" : "ThmanyahChallengesUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

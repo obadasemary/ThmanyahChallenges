@@ -7,7 +7,25 @@
 		<key>ThmanyahChallenges.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>1</integer>
+			<integer>0</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>AFB1176E2E4F687900B997F0</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>AFB1177B2E4F687900B997F0</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>AFB117852E4F687900B997F0</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>
