@@ -14,11 +14,17 @@ let package = Package(
             name: "ThmanyahUseCase",
             targets: ["ThmanyahUseCase"]),
     ],
+    dependencies: [
+        .package(path: "../DependencyContainer")
+    ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "ThmanyahUseCase"
+            name: "ThmanyahUseCase",
+            dependencies: [
+                .product(name: "DependencyContainer", package: "DependencyContainer")
+            ]
         ),
         .testTarget(
             name: "ThmanyahUseCaseTests",
