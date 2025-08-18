@@ -16,12 +16,12 @@ struct HomeFeedView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                LazyVStack(alignment: .leading, spacing: 24) {
+                LazyVStack(alignment: .leading, spacing: 32) {
                     ForEach(Array(viewModel.sections.enumerated()), id: \.1.id) { index, section in
-                        SectionView(section: section)
+                        EnhancedSectionView(section: section)
                     }
                 }
-                .padding(.horizontal)
+                .padding(.vertical, 20)
             }
             .navigationTitle("Discover")
             .task {
