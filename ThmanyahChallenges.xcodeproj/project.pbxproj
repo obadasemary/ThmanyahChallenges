@@ -39,9 +39,22 @@
 		AFB117862E4F687900B997F0 /* ThmanyahChallengesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ThmanyahChallengesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		AF8017532E53BAA5000E122B /* Exceptions for "ThmanyahChallenges" folder in "ThmanyahChallenges" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = AFB1176E2E4F687900B997F0 /* ThmanyahChallenges */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		AFB117712E4F687900B997F0 /* ThmanyahChallenges */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				AF8017532E53BAA5000E122B /* Exceptions for "ThmanyahChallenges" folder in "ThmanyahChallenges" target */,
+			);
 			path = ThmanyahChallenges;
 			sourceTree = "<group>";
 		};
@@ -436,6 +449,8 @@
 				DEVELOPMENT_TEAM = KM569NM77P;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ThmanyahChallenges/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "Fonts provided by application ";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -464,6 +479,8 @@
 				DEVELOPMENT_TEAM = KM569NM77P;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ThmanyahChallenges/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "Fonts provided by application ";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
