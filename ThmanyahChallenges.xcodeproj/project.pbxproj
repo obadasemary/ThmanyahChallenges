@@ -7,10 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AF94FC932E4F87F900DEB490 /* NetworkLayer in Frameworks */ = {isa = PBXBuildFile; productRef = AF94FC922E4F87F900DEB490 /* NetworkLayer */; };
 		AF94FC962E4F885000DEB490 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = AF94FC952E4F885000DEB490 /* SDWebImageSwiftUI */; };
-		AF94FC992E4F930F00DEB490 /* ThmanyahCoreAPI in Frameworks */ = {isa = PBXBuildFile; productRef = AF94FC982E4F930F00DEB490 /* ThmanyahCoreAPI */; };
+		AF94FCD52E51E3AB00DEB490 /* ThmanyahUseCase in Frameworks */ = {isa = PBXBuildFile; productRef = AF94FCD42E51E3AB00DEB490 /* ThmanyahUseCase */; };
+		AF94FCD72E5208C400DEB490 /* ThmanyahRepository in Frameworks */ = {isa = PBXBuildFile; productRef = AF94FCD62E5208C400DEB490 /* ThmanyahRepository */; };
+		AF94FCD92E520C5600DEB490 /* ThmanyahNetworkLayer in Frameworks */ = {isa = PBXBuildFile; productRef = AF94FCD82E520C5600DEB490 /* ThmanyahNetworkLayer */; };
 		AFA9CD112E4F7B1800CFD679 /* SUIRouting in Frameworks */ = {isa = PBXBuildFile; productRef = AFA9CD102E4F7B1800CFD679 /* SUIRouting */; };
+		AFCF80D82E52A8450030756E /* ThmanyahCoreAPI in Frameworks */ = {isa = PBXBuildFile; productRef = AFCF80D72E52A8450030756E /* ThmanyahCoreAPI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,10 +61,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AF94FC992E4F930F00DEB490 /* ThmanyahCoreAPI in Frameworks */,
+				AFCF80D82E52A8450030756E /* ThmanyahCoreAPI in Frameworks */,
 				AF94FC962E4F885000DEB490 /* SDWebImageSwiftUI in Frameworks */,
+				AF94FCD52E51E3AB00DEB490 /* ThmanyahUseCase in Frameworks */,
+				AF94FCD92E520C5600DEB490 /* ThmanyahNetworkLayer in Frameworks */,
 				AFA9CD112E4F7B1800CFD679 /* SUIRouting in Frameworks */,
-				AF94FC932E4F87F900DEB490 /* NetworkLayer in Frameworks */,
+				AF94FCD72E5208C400DEB490 /* ThmanyahRepository in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,12 +87,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AF94FCD32E51E3AB00DEB490 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		AFB117662E4F687900B997F0 = {
 			isa = PBXGroup;
 			children = (
 				AFB117712E4F687900B997F0 /* ThmanyahChallenges */,
 				AFB1177F2E4F687900B997F0 /* ThmanyahChallengesTests */,
 				AFB117892E4F687900B997F0 /* ThmanyahChallengesUITests */,
+				AF94FCD32E51E3AB00DEB490 /* Frameworks */,
 				AFB117702E4F687900B997F0 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -124,9 +136,11 @@
 			name = ThmanyahChallenges;
 			packageProductDependencies = (
 				AFA9CD102E4F7B1800CFD679 /* SUIRouting */,
-				AF94FC922E4F87F900DEB490 /* NetworkLayer */,
 				AF94FC952E4F885000DEB490 /* SDWebImageSwiftUI */,
-				AF94FC982E4F930F00DEB490 /* ThmanyahCoreAPI */,
+				AF94FCD42E51E3AB00DEB490 /* ThmanyahUseCase */,
+				AF94FCD62E5208C400DEB490 /* ThmanyahRepository */,
+				AF94FCD82E520C5600DEB490 /* ThmanyahNetworkLayer */,
+				AFCF80D72E52A8450030756E /* ThmanyahCoreAPI */,
 			);
 			productName = ThmanyahChallenges;
 			productReference = AFB1176F2E4F687900B997F0 /* ThmanyahChallenges.app */;
@@ -212,9 +226,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				AFA9CD0F2E4F7B1800CFD679 /* XCRemoteSwiftPackageReference "SUIRouting" */,
-				AF94FC912E4F87F900DEB490 /* XCRemoteSwiftPackageReference "NetworkLayer" */,
 				AF94FC942E4F885000DEB490 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
-				AF94FC972E4F930F00DEB490 /* XCRemoteSwiftPackageReference "ThmanyahCoreAPI" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = AFB117702E4F687900B997F0 /* Products */;
@@ -581,28 +593,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		AF94FC912E4F87F900DEB490 /* XCRemoteSwiftPackageReference "NetworkLayer" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/obadasemary/NetworkLayer.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.6;
-			};
-		};
 		AF94FC942E4F885000DEB490 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 3.1.3;
-			};
-		};
-		AF94FC972E4F930F00DEB490 /* XCRemoteSwiftPackageReference "ThmanyahCoreAPI" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/obadasemary/ThmanyahCoreAPI";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
 			};
 		};
 		AFA9CD0F2E4F7B1800CFD679 /* XCRemoteSwiftPackageReference "SUIRouting" */ = {
@@ -616,25 +612,31 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		AF94FC922E4F87F900DEB490 /* NetworkLayer */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = AF94FC912E4F87F900DEB490 /* XCRemoteSwiftPackageReference "NetworkLayer" */;
-			productName = NetworkLayer;
-		};
 		AF94FC952E4F885000DEB490 /* SDWebImageSwiftUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = AF94FC942E4F885000DEB490 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
 			productName = SDWebImageSwiftUI;
 		};
-		AF94FC982E4F930F00DEB490 /* ThmanyahCoreAPI */ = {
+		AF94FCD42E51E3AB00DEB490 /* ThmanyahUseCase */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = AF94FC972E4F930F00DEB490 /* XCRemoteSwiftPackageReference "ThmanyahCoreAPI" */;
-			productName = ThmanyahCoreAPI;
+			productName = ThmanyahUseCase;
+		};
+		AF94FCD62E5208C400DEB490 /* ThmanyahRepository */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ThmanyahRepository;
+		};
+		AF94FCD82E520C5600DEB490 /* ThmanyahNetworkLayer */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ThmanyahNetworkLayer;
 		};
 		AFA9CD102E4F7B1800CFD679 /* SUIRouting */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = AFA9CD0F2E4F7B1800CFD679 /* XCRemoteSwiftPackageReference "SUIRouting" */;
 			productName = SUIRouting;
+		};
+		AFCF80D72E52A8450030756E /* ThmanyahCoreAPI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ThmanyahCoreAPI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

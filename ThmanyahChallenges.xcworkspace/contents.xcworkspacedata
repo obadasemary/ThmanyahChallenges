@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:ThmanyahCoreAPI">
+   </FileRef>
+   <FileRef
+      location = "group:ThmanyahNetworkLayer">
+   </FileRef>
+   <FileRef
+      location = "group:ThmanyahRepository">
+   </FileRef>
+   <FileRef
+      location = "group:ThmanyahUseCase">
+   </FileRef>
+   <FileRef
+      location = "group:ThmanyahChallenges.xcodeproj">
+   </FileRef>
+</Workspace>
