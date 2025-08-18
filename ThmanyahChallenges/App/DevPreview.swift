@@ -32,6 +32,12 @@ class DevPreview {
             )
         }
         
+        container.register(SearchRepositoryProtocol.self) {
+            SearchRepository(
+                networkService: container.resolve(NetworkService.self)!
+            )
+        }
+        
         container.register(HomeFeedUseCaseProtocol.self) {
             HomeFeedUseCase(container: container)
         }
