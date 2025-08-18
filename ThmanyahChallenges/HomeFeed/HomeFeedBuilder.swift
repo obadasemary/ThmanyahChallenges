@@ -7,19 +7,22 @@
 
 import SwiftUI
 import ThmanyahUseCase
+import DependencyContainer
 
 @Observable
 @MainActor
 final class HomeFeedBuilder {
-    private let container: DependencyContainer
+    private let container: DIContainer
     
-    init(container: DependencyContainer) {
+    init(container: DIContainer) {
         self.container = container
     }
     
     func buildHomeFeedView() -> some View {
-        let useCase = container.resolve(HomeFeedUseCaseProtocol.self)!
-        let vm = HomeFeedViewModel(homeFeedUseCase: useCase)
-        return HomeFeedView(viewModel: vm)
+        HomeFeedView(
+            viewModel: HomeFeedViewModel(
+                homeFeedUseCase: HomeFeedUseCase(container: container)
+            )
+        )
     }
 }

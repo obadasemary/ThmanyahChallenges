@@ -15,6 +15,7 @@ typealias FeedSection = ThmanyahUseCase.Section
 class HomeFeedViewModel {
     
     private let homeFeedUseCase: HomeFeedUseCaseProtocol
+    
     private(set) var sections: [FeedSection] = []
     private(set) var isLoading = false
     private(set) var errorMessage: String?
@@ -43,10 +44,12 @@ extension HomeFeedViewModel {
         isLoading = true
         defer { isLoading = false }
         do {
-            let res = try await homeFeedUseCase.execute(page: page)
-            print("res.sections.count:", res.sections.count)
-            sections.append(contentsOf: res.sections)
-            if let path = res.pagination.nextPage, let pageQuery = URLComponents(string: path)?.queryItems?.first(where: { $0.name == "page" })?.value, let next = Int(pageQuery) {
+            let response = try await homeFeedUseCase.execute(page: page)
+            print("response.sections.count:", response.sections.count)
+            sections.append(contentsOf: response.sections)
+            if let path = response.pagination.nextPage,
+               let pageQuery = URLComponents(string: path)?.queryItems?.first(where: { $0.name == "page" })?.value,
+               let next = Int(pageQuery) {
                 nextPage = next
             } else {
                 nextPage = nil
