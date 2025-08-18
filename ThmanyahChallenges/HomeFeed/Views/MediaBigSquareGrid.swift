@@ -29,12 +29,6 @@ public struct MediaBigSquareGrid<Item: MediaItem>: View {
                     Text(item.name)
                         .font(.headline)
                         .lineLimit(2)
-                    
-                    if let desc = item.descriptionHTML {
-                        Text(desc.htmlToAttributedString())
-                            .font(.caption)
-                            .lineLimit(3)
-                    }
                 }
             }
         }
