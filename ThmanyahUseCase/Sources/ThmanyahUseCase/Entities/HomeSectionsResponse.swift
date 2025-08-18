@@ -96,6 +96,51 @@ public struct Podcast: MediaItem, Codable, Equatable, Sendable {
     public var avatarURL: URL? { URL(string: avatarURLString ?? "") }
     public var descriptionHTML: String? { description }
     
+    public init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.podcastID = try container.decode(String.self, forKey: .podcastID)
+        self.name = try container.decode(String.self, forKey: .name)
+        self.description = try container
+            .decodeIfPresent(String.self, forKey: .description)
+        self.avatarURLString = try container
+            .decodeIfPresent(String.self, forKey: .avatarURLString)
+        self.episodeCount = try container
+            .decodeIfPresent(Int.self, forKey: .episodeCount)
+        self.duration = try container
+            .decodeIfPresent(TimeInterval.self, forKey: .duration)
+        self.language = try container
+            .decodeIfPresent(String.self, forKey: .language)
+        self.priority = try container
+            .decodeIfPresent(Int.self, forKey: .priority)
+        self.popularityScore = try container
+            .decodeIfPresent(Int.self, forKey: .popularityScore)
+        self.score = try container.decodeIfPresent(Double.self, forKey: .score)
+    }
+    
+    public init(
+        podcastID: String,
+        name: String,
+        description: String?,
+        avatarURLString: String?,
+        episodeCount: Int?,
+        duration: TimeInterval?,
+        language: String?,
+        priority: Int?,
+        popularityScore: Int?,
+        score: Double?
+    ) {
+        self.podcastID = podcastID
+        self.name = name
+        self.description = description
+        self.avatarURLString = avatarURLString
+        self.episodeCount = episodeCount
+        self.duration = duration
+        self.language = language
+        self.priority = priority
+        self.popularityScore = popularityScore
+        self.score = score
+    }
+    
     enum CodingKeys: String, CodingKey {
         case podcastID = "podcast_id"
         case name, description
