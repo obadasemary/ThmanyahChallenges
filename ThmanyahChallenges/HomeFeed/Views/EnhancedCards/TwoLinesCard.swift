@@ -10,6 +10,8 @@ import ThmanyahUseCase
 
 // MARK: - TwoLinesCard
 struct TwoLinesCard: View {
+    
+    @Environment(\.theme) private var theme
     let item: any MediaItem
     
     var body: some View {
@@ -25,6 +27,7 @@ struct TwoLinesCard: View {
         .padding(16)
         .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
         .background(Color(.systemGray6))
+        .cornerRadius(theme.cornerRadius.medium)
         .accessibilityIdentifier("two_lines_card")
         .accessibilityLabel("Two lines content card")
     }
