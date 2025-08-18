@@ -35,6 +35,9 @@ The architecture is divided into several components:
 * **API Service:** Fetches data from the backend using URLSession.
 * **Dependency Injection:** Manages dependencies using a custom DIContainer for better testability.
 
+![Thmanyah Design Architecture]()
+![Thmanyah Design Architecture Interview]()
+
 ## Layers
 
 ### Domain Layer
