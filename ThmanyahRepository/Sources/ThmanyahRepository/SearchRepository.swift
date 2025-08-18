@@ -21,8 +21,8 @@ public final class SearchRepository {
 }
 
 extension SearchRepository: SearchRepositoryProtocol {
-    public func search(term: String, page: Int) async throws -> ThmanyahUseCase.SearchResponse {
-        let endpoint = ThmanyahCoreAPI.SearchEndpoint.search(term: term, page: page)
+    public func search(term: String) async throws -> ThmanyahUseCase.SearchResponse {
+        let endpoint = ThmanyahCoreAPI.SearchEndpoint.search(term: term)
         return try await networkService
             .request(
                 endpoint: endpoint,

@@ -10,7 +10,7 @@ import DependencyContainer
 
 @MainActor
 public protocol SearchUseCaseProtocol {
-    func execute(term: String, page: Int) async throws -> SearchResponse
+    func execute(term: String) async throws -> SearchResponse
 }
 
 @Observable
@@ -24,8 +24,8 @@ public final class SearchUseCase {
 }
 
 extension SearchUseCase: SearchUseCaseProtocol {
-    public func execute(term: String, page: Int) async throws -> SearchResponse {
-        try await repository.search(term: term, page: page)
+    public func execute(term: String) async throws -> SearchResponse {
+        try await repository.search(term: term)
     }
 }
 

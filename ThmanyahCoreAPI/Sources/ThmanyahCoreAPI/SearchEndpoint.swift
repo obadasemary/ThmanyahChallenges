@@ -9,7 +9,7 @@ import Foundation
 import ThmanyahNetworkLayer
 
 public enum SearchEndpoint {
-    case search(term: String, page: Int?)
+    case search(term: String)
 }
 
 extension SearchEndpoint: Endpoint {
@@ -31,9 +31,8 @@ extension SearchEndpoint: Endpoint {
 
     public var parameters: [String : Any]? {
         switch self {
-        case .search(let term, let page):
-            var params: [String: Any] = ["q": term]
-            if let page { params["page"] = page }
+        case .search(let term):
+            let params: [String: Any] = ["q": term]
             return params
         }
     }

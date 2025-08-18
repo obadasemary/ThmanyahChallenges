@@ -8,12 +8,11 @@
 import Foundation
 
 public struct SearchResponse: Codable, Equatable, Sendable {
+    
     public let results: [SearchResult]
-    public let pagination: Pagination
 
-    public init(results: [SearchResult], pagination: Pagination) {
+    public init(results: [SearchResult]) {
         self.results = results
-        self.pagination = pagination
     }
 
     private enum CodingKeys: String, CodingKey {
@@ -39,17 +38,11 @@ public struct SearchResponse: Codable, Equatable, Sendable {
         } else {
             self.results = []
         }
-        
-        // Decode pagination if present; otherwise, default to a single page with no next
-        let decodedPagination = (try? container.decode(Pagination.self, forKey: .pagination))
-            ?? Pagination(nextPage: nil, totalPages: 1)
-        self.pagination = decodedPagination
     }
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(results, forKey: .results)
-        try container.encode(pagination, forKey: .pagination)
     }
 }
 

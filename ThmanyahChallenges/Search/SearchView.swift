@@ -57,7 +57,7 @@ struct SearchView: View {
 
 // MARK: - Preview Helpers
 private final class PreviewSearchUseCase: SearchUseCaseProtocol {
-    func execute(term: String, page: Int) async throws -> SearchResponse {
-        return SearchResponse(results: [], pagination: Pagination(nextPage: nil, totalPages: 1))
+    func execute(term: String) async throws -> SearchResponse {
+        return SearchResponse(results: [])
     }
 }

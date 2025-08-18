@@ -9,7 +9,7 @@ import Foundation
 
 @MainActor
 public protocol SearchRepositoryProtocol {
-    func search(term: String, page: Int) async throws -> SearchResponse
+    func search(term: String) async throws -> SearchResponse
 }
 
 

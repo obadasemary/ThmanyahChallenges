@@ -61,6 +61,11 @@ public struct Pagination: Codable, Equatable, Sendable {
     public let nextPage: String?
     public let totalPages: Int
     
+//    public init(nextPage: String?, totalPages: Int) {
+//        self.nextPage = nextPage
+//        self.totalPages = totalPages
+//    }
+    
     enum CodingKeys: String, CodingKey {
         case nextPage = "next_page",
              totalPages = "total_pages"
