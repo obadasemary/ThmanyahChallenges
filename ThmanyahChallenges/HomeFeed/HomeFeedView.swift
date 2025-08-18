@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ThmanyahUseCase
+import DependencyContainer
 
 // MARK: - HomeFeedView
 struct HomeFeedView: View {
@@ -14,6 +15,11 @@ struct HomeFeedView: View {
     @State var viewModel: HomeFeedViewModel
     @State private var selectedTab: String = "لك"
     @Environment(SearchBuilder.self) private var searchBuilder
+    @Environment(\.theme) private var theme
+    
+    init(viewModel: HomeFeedViewModel) {
+        self.viewModel = viewModel
+    }
     
     var body: some View {
         NavigationStack {
@@ -23,39 +29,28 @@ struct HomeFeedView: View {
                 
                 // Main Content
                 ScrollView {
-                    LazyVStack(alignment: .leading, spacing: 32) {
+                    LazyVStack(alignment: .leading, spacing: theme.spacing.huge) {
                         ForEach(Array(viewModel.sections.enumerated()), id: \.1.id) { index, section in
                             EnhancedSectionView(section: section)
                         }
                     }
-                    .padding(.vertical, 20)
+                    .padding(.horizontal, theme.spacing.extraSmall)
+                    .padding(.vertical, theme.spacing.medium)
                 }
-                .overlay {
-                    Group {
-                        if viewModel.isLoading {
-                            ProgressView()
-                                .padding(.bottom, 16)
-                                .frame(
-                                    maxWidth: .infinity,
-                                    maxHeight: .infinity,
-                                    alignment: .center
-                                )
-                        }
-                    }
-                }
+                .background(theme.colors.background)
             }
-            .onFirstTask {
-                await viewModel.refresh()
-            }
+            .background(theme.colors.background)
+        }
+        .onFirstTask {
+            await viewModel.refresh()
         }
     }
 }
 
 // MARK: - TopNavigationTabs
 private struct TopNavigationTabs: View {
-    
     @Binding var selectedTab: String
-    @Environment(SearchBuilder.self) private var searchBuilder
+    @Environment(\.theme) private var theme
     
     private let tabs = ["لك", "البودكاست", "المقالات الصوتية", "الكتب"]
     
@@ -66,7 +61,7 @@ private struct TopNavigationTabs: View {
             
             // Navigation Tabs
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: UIConstants.Spacing.medium) {
+                HStack(spacing: theme.spacing.medium) {
                     ForEach(tabs, id: \.self) { tab in
                         TabButton(
                             title: tab,
@@ -76,9 +71,9 @@ private struct TopNavigationTabs: View {
                         }
                     }
                 }
-                .padding(.horizontal, UIConstants.Spacing.large)
+                .padding(.horizontal, theme.spacing.large)
             }
-            .padding(.vertical, UIConstants.Spacing.medium)
+            .padding(.vertical, theme.spacing.medium)
             .accessibilityIdentifier("main_content_scrollView")
         }
     }
@@ -88,17 +83,18 @@ private struct TopNavigationTabs: View {
 private struct TopHeaderSection: View {
     
     @Environment(SearchBuilder.self) private var searchBuilder
+    @Environment(\.theme) private var theme
     
     var body: some View {
         HStack {
             // Profile/Avatar placeholder
             Circle()
-                .fill(Color(.systemGray5))
+                .fill(theme.colors.cardBackground)
                 .frame(width: 40, height: 40)
                 .overlay(
                     Image(systemName: "person.fill")
                         .font(.system(size: 20))
-                        .foregroundColor(.secondary)
+                        .foregroundColor(theme.colors.secondaryText)
                 )
                 .accessibilityIdentifier("profile_avatar")
             
@@ -106,27 +102,30 @@ private struct TopHeaderSection: View {
             
             // App title or logo
             Text("ثمانية")
-                .font(UIConstants.Typography.title)
-                .foregroundColor(.primary)
+                .font(theme.typography.title)
+                .foregroundColor(theme.colors.text)
                 .accessibilityIdentifier("app_title")
             
             Spacer()
+            
+            // Theme toggle button
+            ThemeToggleButton()
             
             // Search navigation
             NavigationLink(destination: searchBuilder.buildSearchView()) {
                 Image(systemName: "magnifyingglass")
                     .font(.system(size: 20, weight: .medium))
-                    .foregroundColor(.primary)
+                    .foregroundColor(theme.colors.text)
                     .frame(width: 40, height: 40)
-                    .background(Color(.systemGray5))
+                    .background(theme.colors.cardBackground)
                     .clipShape(Circle())
             }
             .accessibilityIdentifier("search_button")
             .accessibilityLabel("Search")
         }
-        .padding(.horizontal, UIConstants.Spacing.large)
-        .padding(.vertical, UIConstants.Spacing.medium)
-        .background(Color(.systemBackground))
+        .padding(.horizontal, theme.spacing.large)
+        .padding(.vertical, theme.spacing.medium)
+        .background(theme.colors.background)
     }
 }
 
@@ -135,26 +134,27 @@ private struct TabButton: View {
     let title: String
     let isSelected: Bool
     let action: () -> Void
+    @Environment(\.theme) private var theme
     
     var body: some View {
         Button(action: action) {
             Text(title)
-                .font(UIConstants.Typography.subheadline)
-                .foregroundColor(.primary)
-                .padding(.horizontal, UIConstants.Spacing.large)
-                .padding(.vertical, UIConstants.Spacing.small)
+                .font(theme.typography.subheadline)
+                .foregroundColor(theme.colors.text)
+                .padding(.horizontal, theme.spacing.large)
+                .padding(.vertical, theme.spacing.small)
                 .background(backgroundColor)
-                .clipShape(RoundedRectangle(cornerRadius: UIConstants.CornerRadius.extraLarge, style: .continuous))
+                .clipShape(RoundedRectangle(cornerRadius: theme.cornerRadius.extraLarge, style: .continuous))
         }
         .buttonStyle(PlainButtonStyle())
-        .animation(.easeInOut(duration: 0.2), value: isSelected)
+        .animation(theme.animations.quick, value: isSelected)
         .accessibilityIdentifier("tab_\(title)")
         .accessibilityLabel(title)
         .accessibilityAddTraits(isSelected ? .isSelected : [])
     }
     
     private var backgroundColor: Color {
-        isSelected ? Color.red : Color(.systemGray5)
+        isSelected ? theme.colors.accent : theme.colors.cardBackground
     }
 }
 
@@ -164,4 +164,5 @@ private struct TabButton: View {
     let homeFeedBuilder = HomeFeedBuilder(container: container)
     return homeFeedBuilder.buildHomeFeedView()
         .previewEnvironment()
+        .withTheme()
 }

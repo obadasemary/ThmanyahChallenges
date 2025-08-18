@@ -18,6 +18,8 @@ struct ThmanyahChallengesApp: App {
             delegate.homeFeedBuilder.buildHomeFeedView()
                 .environment(delegate.homeFeedBuilder)
                 .environment(delegate.searchBuilder)
+                .withTheme()
+                .preferredColorScheme(nil) // Allow system to control theme
         }
     }
 }
