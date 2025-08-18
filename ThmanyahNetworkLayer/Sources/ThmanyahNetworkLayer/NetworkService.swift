@@ -6,6 +6,7 @@
 //
 
 @MainActor
+@available(macOS 12.0, iOS 15.0, *)
 public protocol NetworkService {
     func request<T: Decodable>(endpoint: Endpoint, responseModel: T.Type) async throws -> T
 }

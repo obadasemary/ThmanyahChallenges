@@ -17,7 +17,25 @@ final class MockURLProtocol: URLProtocol {
     }
     
     override class func canonicalRequest(for request: URLRequest) -> URLRequest {
-        return request
+        // Create a mutable copy to preserve all properties including the body
+        var canonicalRequest = request
+        
+        // Ensure the body is preserved
+        if let body = request.httpBody {
+            canonicalRequest.httpBody = body
+        }
+        
+        // Ensure method is preserved
+        if let method = request.httpMethod {
+            canonicalRequest.httpMethod = method
+        }
+        
+        // Ensure headers are preserved
+        if let headers = request.allHTTPHeaderFields {
+            canonicalRequest.allHTTPHeaderFields = headers
+        }
+        
+        return canonicalRequest
     }
     
     override func startLoading() {

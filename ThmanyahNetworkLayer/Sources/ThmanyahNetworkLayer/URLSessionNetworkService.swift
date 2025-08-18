@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum NetworkError: Error {
+public enum NetworkError: Error, Equatable {
     case invalidURL
     case invalidResponse
     case decodingError
@@ -19,13 +19,14 @@ public final class URLSessionNetworkService {
     
     private let session: URLSession
     
-    public init(session: URLSession = .shared) {
+    nonisolated public init(session: URLSession = .shared) {
         self.session = session
     }
 }
 
 extension URLSessionNetworkService: NetworkService {
     
+    @available(macOS 12.0, iOS 15.0, *)
     public func request<T: Decodable>(endpoint: Endpoint, responseModel: T.Type) async throws -> T {
         // Build URL with query parameters for GET requests
         let urlString = endpoint.baseURL + endpoint.path
@@ -43,11 +44,25 @@ extension URLSessionNetworkService: NetworkService {
         
         var request = URLRequest(url: url)
         request.httpMethod = endpoint.method.rawValue
-        request.allHTTPHeaderFields = endpoint.headers
+        
+        // Merge default headers with custom headers
+        var allHeaders = ["Content-Type": endpoint.contentType]
+        // Add any custom headers from the endpoint
+        for (key, value) in endpoint.headers {
+            allHeaders[key] = value
+        }
+        request.allHTTPHeaderFields = allHeaders
+        
         // Encode body for non-GET methods
         if endpoint.method != .get, let params = endpoint.parameters {
             if endpoint.contentType.contains("application/json") {
-                request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
+                do {
+                    let bodyData = try JSONSerialization.data(withJSONObject: params, options: [])
+                    request.httpBody = bodyData
+                } catch {
+                    print("Failed to encode parameters as JSON: \(error)")
+                    throw NetworkError.decodingError
+                }
             }
         }
         
