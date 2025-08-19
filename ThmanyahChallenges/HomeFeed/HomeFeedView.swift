@@ -32,6 +32,23 @@ struct HomeFeedView: View {
                     LazyVStack(alignment: .leading, spacing: theme.spacing.huge) {
                         ForEach(Array(viewModel.sections.enumerated()), id: \.1.id) { index, section in
                             EnhancedSectionView(section: section)
+                                .onAppear {
+                                    // Trigger pagination when approaching the end
+                                    Task {
+                                        await viewModel.loadMoreIfNeeded(currentIndex: index)
+                                    }
+                                }
+                        }
+                        
+                        // Loading indicator at the bottom when loading more
+                        if viewModel.isLoading && !viewModel.sections.isEmpty {
+                            HStack {
+                                Spacer()
+                                ProgressView()
+                                    .scaleEffect(1.2)
+                                    .padding()
+                                Spacer()
+                            }
                         }
                     }
                     .padding(.horizontal, theme.spacing.extraSmall)
