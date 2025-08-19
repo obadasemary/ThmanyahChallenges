@@ -23,8 +23,8 @@ final class ThmanyahChallengesUITestsLaunchTests: XCTestCase {
         app.launch()
 
         // Wait for the app to fully load - give it more time for network requests
-        let topPodcastsSection = app.staticTexts["Top Podcasts"]
-        XCTAssertTrue(topPodcastsSection.waitForExistence(timeout: 20), "Top Podcasts section should be visible within 20 seconds")
+        let appTitle = app.staticTexts["ثمانية"]
+        XCTAssertTrue(appTitle.waitForExistence(timeout: 20), "App title 'ثمانية' should be visible within 20 seconds")
 
         // Take a screenshot of the launch state
         let attachment = XCTAttachment(screenshot: app.screenshot())
@@ -33,15 +33,18 @@ final class ThmanyahChallengesUITestsLaunchTests: XCTestCase {
         add(attachment)
         
         // Verify basic app structure is present
-        let exploreTab = app.tabBars.buttons["Explore"]
-        XCTAssertTrue(exploreTab.exists, "Explore tab should exist")
+        let profileAvatar = app.otherElements["profile_avatar"]
+        XCTAssertTrue(profileAvatar.exists, "Profile avatar should exist")
         
-        let searchTab = app.tabBars.buttons["Search"]
-        XCTAssertTrue(searchTab.exists, "Search tab should exist")
+        let searchButton = app.buttons["search_button"]
+        XCTAssertTrue(searchButton.exists, "Search button should exist")
+        
+        let themeToggleButton = app.buttons["theme_toggle_button"]
+        XCTAssertTrue(themeToggleButton.exists, "Theme toggle button should exist")
         
         // Verify that content sections are displayed
-        let trendingEpisodesSection = app.staticTexts["Trending Episodes"]
-        XCTAssertTrue(trendingEpisodesSection.waitForExistence(timeout: 15), "Trending Episodes section should be visible")
+        let mainContentScrollView = app.scrollViews["main_content_scrollView"]
+        XCTAssertTrue(mainContentScrollView.waitForExistence(timeout: 15), "Main content scroll view should be visible")
         
         // Verify that the app has loaded some content - look for any content, not just specific types
         let cells = app.cells.allElementsBoundByIndex
@@ -50,6 +53,10 @@ final class ThmanyahChallengesUITestsLaunchTests: XCTestCase {
         
         // At least some content should be loaded
         XCTAssertTrue(cells.count > 0 || images.count > 0 || buttons.count > 0, "Should display some content after launch")
+        
+        // Verify navigation tabs are displayed
+        let tabButtons = app.buttons.matching(identifier: "tab_*")
+        XCTAssertGreaterThan(tabButtons.count, 0, "Should display navigation tabs after launch")
     }
     
     @MainActor
@@ -59,8 +66,8 @@ final class ThmanyahChallengesUITestsLaunchTests: XCTestCase {
             app.launch()
             
             // Wait for content to load to measure full launch time
-            let topPodcastsSection = app.staticTexts["Top Podcasts"]
-            _ = topPodcastsSection.waitForExistence(timeout: 20)
+            let appTitle = app.staticTexts["ثمانية"]
+            _ = appTitle.waitForExistence(timeout: 20)
         }
     }
 }
