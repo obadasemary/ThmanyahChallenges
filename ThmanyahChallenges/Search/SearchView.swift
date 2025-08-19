@@ -14,7 +14,7 @@ final class SearchViewController: UIViewController {
     
     // MARK: - Properties
     private let viewModel: SearchViewModel
-    private let searchController = UISearchController(searchResultsController: nil)
+    private let searchBar = UISearchBar()
     private let tableView = UITableView()
     private let loadingIndicator = UIActivityIndicatorView(style: .large)
     private let emptyStateLabel = UILabel()
@@ -34,7 +34,7 @@ final class SearchViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         setupConstraints()
-        setupSearchController()
+        setupSearchBar()
         setupTableView()
         setupEmptyState()
         setupBindings()
@@ -42,49 +42,60 @@ final class SearchViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationItem.hidesSearchBarWhenScrolling = false
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.largeTitleDisplayMode = .never
+        
+        // Set the back button and navigation bar tint color to match HomeFeedView accent
+        navigationController?.navigationBar.tintColor = UIColor.systemOrange
     }
     
     // MARK: - UI Setup
     private func setupUI() {
         view.backgroundColor = .systemBackground
         title = "Search"
-        navigationController?.navigationBar.prefersLargeTitles = true
         
+        view.addSubview(searchBar)
         view.addSubview(tableView)
         view.addSubview(loadingIndicator)
         view.addSubview(emptyStateLabel)
     }
     
     private func setupConstraints() {
+        searchBar.translatesAutoresizingMaskIntoConstraints = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
         loadingIndicator.translatesAutoresizingMaskIntoConstraints = false
         emptyStateLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            
-            loadingIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            loadingIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            
-            emptyStateLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            emptyStateLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            emptyStateLabel.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: 20),
-            emptyStateLabel.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -20)
-        ])
+        NSLayoutConstraint.activate(
+            [
+                // Search bar at top under safe area
+                searchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+                searchBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                searchBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                
+                // Table below search bar
+                tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor),
+                tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+                
+                loadingIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                loadingIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+                
+                emptyStateLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                emptyStateLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+                emptyStateLabel.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: 20),
+                emptyStateLabel.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -20)
+            ]
+        )
     }
     
-    private func setupSearchController() {
-        searchController.searchResultsUpdater = self
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Search podcasts, episodes, audiobooks..."
-        searchController.searchBar.delegate = self
-        
-        navigationItem.searchController = searchController
-        definesPresentationContext = true
+    private func setupSearchBar() {
+        searchBar.placeholder = "Search podcasts, episodes, audiobooks..."
+        searchBar.delegate = self
+        searchBar.searchBarStyle = .minimal
+        searchBar.autocapitalizationType = .none
+        searchBar.autocorrectionType = .no
     }
     
     private func setupTableView() {
@@ -106,8 +117,7 @@ final class SearchViewController: UIViewController {
     }
     
     private func setupBindings() {
-        // For @Observable, we need to observe the properties directly
-        // Since we can't use objectWillChange, we'll update UI in the search method
+        // For @Observable, we update UI after actions complete
     }
     
     // MARK: - UI Updates
@@ -127,44 +137,33 @@ final class SearchViewController: UIViewController {
     private func performSearch(with term: String) {
         Task {
             await viewModel.search(term: term)
-            // Update UI after search completes
-            await MainActor.run {
-                updateUI()
-            }
+            await MainActor.run { self.updateUI() }
         }
-    }
-}
-
-// MARK: - UISearchResultsUpdating
-extension SearchViewController: UISearchResultsUpdating {
-    func updateSearchResults(for searchController: UISearchController) {
-        guard let searchTerm = searchController.searchBar.text, !searchTerm.isEmpty else {
-            return
-        }
-        
-        // Debounce search
-        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(performDelayedSearch), object: nil)
-        perform(#selector(performDelayedSearch), with: searchTerm, afterDelay: 0.5)
-    }
-    
-    @objc private func performDelayedSearch(_ searchTerm: String) {
-        performSearch(with: searchTerm)
     }
 }
 
 // MARK: - UISearchBarDelegate
 extension SearchViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(_debouncedSearch(_:)), object: nil)
+        perform(#selector(_debouncedSearch(_:)), with: searchText, afterDelay: 0.2)
+    }
+    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let searchTerm = searchBar.text, !searchTerm.isEmpty else { return }
-        performSearch(with: searchTerm)
-        searchController.isActive = false
+        guard let text = searchBar.text, !text.trimmingCharacters(in: .whitespaces).isEmpty else { return }
+        performSearch(with: text)
+        searchBar.resignFirstResponder()
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        // Clear results when cancel is tapped
-        Task {
-            await viewModel.search(term: "")
-        }
+        searchBar.text = nil
+        performSearch(with: "")
+    }
+    
+    @objc private func _debouncedSearch(_ text: NSString) {
+        let term = String(text)
+        guard !term.trimmingCharacters(in: .whitespaces).isEmpty else { return }
+        performSearch(with: term)
     }
 }
 
@@ -185,14 +184,12 @@ extension SearchViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension SearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 120 // Height for TwoLinesCard design
+        return 120
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        
         let result = viewModel.results[indexPath.row]
-        // Handle selection - could navigate to detail view
         print("Selected: \(result)")
     }
 }
@@ -203,7 +200,13 @@ struct SearchView: View {
     
     var body: some View {
         SearchViewControllerRepresentable(viewModel: viewModel)
+            .navigationBarTitleDisplayMode(.inline)
     }
+}
+
+#Preview {
+    let viewModel = SearchViewModel(searchUseCase: PreviewSearchUseCase())
+    return SearchView(viewModel: viewModel)
 }
 
 // MARK: - UIViewControllerRepresentable
@@ -211,12 +214,10 @@ struct SearchViewControllerRepresentable: UIViewControllerRepresentable {
     let viewModel: SearchViewModel
     
     func makeUIViewController(context: Context) -> SearchViewController {
-        return SearchViewController(viewModel: viewModel)
+        SearchViewController(viewModel: viewModel)
     }
     
-    func updateUIViewController(_ uiViewController: SearchViewController, context: Context) {
-        // Update if needed
-    }
+    func updateUIViewController(_ uiViewController: SearchViewController, context: Context) { }
 }
 
 // MARK: - Preview Helper
