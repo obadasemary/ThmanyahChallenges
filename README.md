@@ -167,3 +167,7 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 By isolating each component into **Swift Packages**, we ensure that the codebase is modular, scalable, and easy to test. Each package can evolve independently, ensuring flexibility in the face of future requirements. The **Clean Architecture** pattern guarantees a long-lasting, maintainable project that adheres to the **SOLID principles** of software design.
 
 The integration of modern SwiftUI patterns, Arabic typography support, and comprehensive testing makes this project a robust foundation for building scalable iOS applications with excellent user experience and maintainable codebase.
+
+---
+
+Built with ❤️ using SwiftUI and Clean Architecture
